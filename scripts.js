@@ -1,16 +1,35 @@
-let action = getAction('Hello! What do you want to do (+,-,/,*)?');
-let numberOne = getNumber('Write the first number');
-let numberTwo = getNumber('Write the second number');
-let result = calculate(numberOne, numberTwo, action);
+const action = getAction('Hello! What do you want to do (+,-,/,*)?');
+const numberOne = getNumber('Write the first number');
+const numberTwo = getNumber('Write the second number');
 
+const result = calculate(numberOne, numberTwo, action);
 showResult(numberOne, numberTwo, action, result);
 
-function getAction(message) {
-    return prompt(message);
+function getAction() {
+    let op = prompt('Hello! What do you want to do (+,-,/,*)?');
+
+    while (isActionInvalid(op)) {
+        op = prompt('Wrong action! Try again.');
+    }
+    return op;
 }
 
-function getNumber(message) {
-    return +prompt(message);
+function isActionInvalid(value) {
+    return value !== '+' && value !== '-' && value !== '/' && value !== '*';
+}
+
+function getNumber(msg) {
+    let operand;
+
+    do {
+        operand = prompt(msg);
+    } while (isNumberInvalid(operand));
+
+    return +operand;
+}
+
+function isNumberInvalid(value) {
+    return isNaN(value) || value === '' || value === null;
 }
 
 function calculate(numberOne, numberTwo, action) {
@@ -23,6 +42,9 @@ function calculate(numberOne, numberTwo, action) {
             return numberOne / numberTwo;
         case "*":
             return numberOne * numberTwo;
+        default:
+            alert('Wrong symbol! Try again.');
+            return null;
     }
 }
 
