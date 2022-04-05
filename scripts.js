@@ -1,8 +1,9 @@
 const action = getAction('Hello! What do you want to do (+,-,/,*)?');
-const numbers = getNumbers('Enter the numbers through the comma');
-const result = calculate();
-showResult();
+const numberOne = getNumber('Write the first number');
+const numberTwo = getNumber('Write the second number');
 
+const result = calculate(numberOne, numberTwo, action);
+showResult(numberOne, numberTwo, action, result);
 
 function getAction() {
     let op = prompt('Hello! What do you want to do (+,-,/,*)?');
@@ -17,44 +18,36 @@ function isActionInvalid(value) {
     return value !== '+' && value !== '-' && value !== '/' && value !== '*';
 }
 
-function getNumbers(msg) {
+function getNumber(msg) {
     let operand;
-    
+
     do {
         operand = prompt(msg);
-    } while (operand === '' || operand === null);
+    } while (isNumberInvalid(operand));
 
-    let arr = operand.split(',');
+    return +operand;
+}
 
-    let sum = 0;
+function isNumberInvalid(value) {
+    return isNaN(value) || value === '' || value === null;
+}
 
-    for (let i = 0; i < arr.length; i++) {
-        sum = sum + Number(arr[i]);
+function calculate(numberOne, numberTwo, action) {
+    switch (action) {
+        case "+":
+            return numberOne + numberTwo;
+        case "-":
+            return numberOne - numberTwo;
+        case "/":
+            return numberOne / numberTwo;
+        case "*":
+            return numberOne * numberTwo;
+        default:
+            alert('Wrong symbol! Try again.');
+            return null;
     }
+}
 
-    alert(sum);
-
-    let multyply = 1;
-
-    for (let i = 0; i < arr.length; i++) {
-        multyply = multyply * Number(arr[i]);
-    }
-
-    alert(multyply);
-
-    let divide = 1;
-
-    for (let i = 0; i < arr.length; i++) {
-        divide = Number(arr[i]) / divide;
-    }
-
-    alert(divide);
-
-    let minus = 0;
-
-    for (let i = 0; i < arr.length; i++) {
-        minus = minus - Number(arr[i]);
-    }
-    
-    alert(minus);    
+function showResult(numberOne, numberTwo, action, result) {
+    alert(`Yuor answer: ${numberOne} ${action} ${numberTwo} = ${result}`);
 }
