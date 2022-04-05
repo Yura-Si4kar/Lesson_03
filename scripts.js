@@ -28,7 +28,7 @@ function getNumbers(msg) {
 
     let sum = 0;
 
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {.
         sum = sum + Number(arr[i]);
     }
 
